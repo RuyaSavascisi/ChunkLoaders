@@ -88,7 +88,7 @@ public class ChunkImage {
                     blue = Math.max((int)(blue * 0.7), 0);
                 }
 
-                image.setPixel(x, z, (255 << 24) | (blue << 16) | (green << 8) | red);
+                image.setPixel(x, z, (255 << 24) | (red << 16) | (green << 8) | blue);
             }
         }
 
