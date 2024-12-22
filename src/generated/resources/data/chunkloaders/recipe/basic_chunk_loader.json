@@ -6,15 +6,9 @@
     "ABA"
   ],
   "key": {
-    "A": {
-      "tag": "forge:ingots/iron"
-    },
-    "B": {
-      "tag": "forge:obsidian"
-    },
-    "C": {
-      "tag": "forge:ender_pearls"
-    }
+    "A": "#c:ingots/iron",
+    "B": "#c:obsidians",
+    "C": "#c:ender_pearls"
   },
   "result": {
     "id": "chunkloaders:basic_chunk_loader"

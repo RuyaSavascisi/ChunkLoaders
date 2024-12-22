@@ -2,6 +2,10 @@ package com.supermartijn642.chunkloaders.screen;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.renderer.RenderStateShard;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
@@ -14,6 +18,19 @@ import net.minecraft.world.level.material.MapColor;
  * Created 8/19/2020 by SuperMartijn642
  */
 public class ChunkImage {
+
+    private static ChunkImage lastRequestedImage;
+    private static final RenderType RENDER_TYPE = RenderType.create(
+        "chunkloaders:map_cell",
+        DefaultVertexFormat.POSITION_TEX,
+        VertexFormat.Mode.QUADS,
+        DefaultVertexFormat.POSITION_TEX.getVertexSize() * 4,
+        RenderType.CompositeState.builder()
+            .setShaderState(RenderStateShard.POSITION_TEX_SHADER)
+            .setDepthTestState(RenderStateShard.NO_DEPTH_TEST)
+            .setTextureState(new RenderStateShard.EmptyTextureStateShard(() -> lastRequestedImage.bindTexture(), () -> {}))
+            .createCompositeState(false)
+    );
 
     private final Level world;
     private final ChunkPos chunkPos;
@@ -30,6 +47,11 @@ public class ChunkImage {
         if(this.texture == null)
             this.texture = new DynamicTexture(this.createImage());
         RenderSystem.setShaderTexture(0, this.texture.getId());
+    }
+
+    public RenderType getRenderType(){
+        lastRequestedImage = this;
+        return RENDER_TYPE;
     }
 
     public void dispose(){
@@ -88,7 +110,7 @@ public class ChunkImage {
                     blue = Math.max((int)(blue * 0.7), 0);
                 }
 
-                image.setPixelRGBA(x, z, (255 << 24) | (blue << 16) | (green << 8) | red);
+                image.setPixel(x, z, (255 << 24) | (red << 16) | (green << 8) | blue);
             }
         }
 
