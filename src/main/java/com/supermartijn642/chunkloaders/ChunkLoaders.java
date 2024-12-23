@@ -56,6 +56,7 @@ public class ChunkLoaders implements ModInitializer {
         GeneratorRegistrationHandler handler = GeneratorRegistrationHandler.get("chunkloaders");
         handler.addGenerator(ChunkLoadersModelGenerator::new);
         handler.addGenerator(ChunkLoadersBlockStateGenerator::new);
+        handler.addGenerator(ChunkLoadersItemInfoGenerator::new);
         handler.addGenerator(ChunkLoadersLanguageGenerator::new);
         handler.addGenerator(ChunkLoadersLootTableGenerator::new);
         handler.addGenerator(ChunkLoadersRecipeGenerator::new);
