@@ -1,0 +1,6 @@
+{
+  "model": {
+    "model": "chunkloaders:item/basic_chunk_loader",
+    "type": "minecraft:model"
+  }
+}
